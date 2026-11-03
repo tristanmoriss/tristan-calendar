@@ -1,0 +1,48 @@
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Tristan — Master Calendar</title>
+<style>
+ body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;background:#0f1115;color:#e8e8ea;margin:0;padding:16px}
+ h1{font-size:20px} h2{font-size:15px;color:#9aa0aa;margin:18px 0 8px}
+ .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;max-width:1100px;margin:0 auto}
+ .dow{color:#9aa0aa;font-size:11px;text-align:center;padding:3px 0}
+ .day{background:#181b21;min-height:64px;border-radius:8px;padding:4px;font-size:11px;overflow:hidden}
+ .day.dim{opacity:.3}.day.today{outline:2px solid #d4af37}
+ .dnum{color:#9aa0aa;margin-bottom:3px}
+ .ev{border-radius:4px;padding:1px 4px;margin:2px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .deadline{background:#3a2020;border-left:3px solid #e06c5a}.academic{background:#1e2d3f;border-left:3px solid #6ca8e0}
+ .travel{background:#203a2a;border-left:3px solid #6ce09a}.tax{background:#3a3416;border-left:3px solid #e0c05a}
+ .recurring{background:#242830;border-left:3px solid #8a90a0}.manual{background:#242830;border-left:3px solid #8a90a0}
+ .agenda{max-width:1100px;margin:0 auto}
+ .ag{display:flex;gap:10px;padding:8px 10px;background:#181b21;border-radius:8px;margin:4px 0;align-items:baseline;font-size:14px}
+ .ag .d{color:#d4af37;min-width:80px}.ag .t{color:#9aa0aa;font-size:12px;min-width:40px}
+ .note{color:#666;font-size:12px;max-width:1100px;margin:8px auto}
+ .nav{display:flex;justify-content:center;gap:16px;margin:10px 0}
+ button{background:#181b21;color:#e8e8ea;border:1px solid #2a2f38;border-radius:6px;padding:6px 14px;cursor:pointer}
+</style></head><body>
+<h1 style="text-align:center" id="mLabel"></h1>
+<div class=nav><button onclick="view.setMonth(view.getMonth()-1);refresh()">‹</button><button onclick="view=new Date();refresh()">Today</button><button onclick="view.setMonth(view.getMonth()+1);refresh()">›</button></div>
+<div class=grid id=grid></div>
+<h2 style="text-align:left;max-width:1100px;margin:18px auto 8px">Next 30 days</h2><div class=agenda id=agenda></div>
+<p class=note>Read-only view — synced from Tristan's machine. To add or change events: message the calendar bot on Telegram.</p>
+<script>
+let view=new Date(),ALL=[];
+const DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],MON=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const cls=e=>['deadline','academic','travel','tax'].includes(e.type)?e.type:(e.source&&e.source!=='manual'?e.source:'manual');
+async function refresh(){try{ALL=await(await fetch('events.json?t='+Date.now())).json();}catch(e){ALL=[];}
+ ALL.sort((a,b)=>(a.date+(a.time||'')).localeCompare(b.date+(b.time||'')));
+ const y=view.getFullYear(),m=view.getMonth();
+ document.getElementById('mLabel').textContent=MON[m]+' '+y;
+ const start=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();
+ const today=new Date().toISOString().slice(0,10);
+ let g=DOW.map(d=>'<div class=dow>'+d+'</div>').join('');
+ for(let i=0;i<start;i++)g+='<div class="day dim"></div>';
+ for(let d=1;d<=days;d++){const ds=y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+  const de=ALL.filter(x=>x.date===ds).map(x=>'<div class="ev '+cls(x)+'">'+(x.time?x.time+' ':'')+x.title.replace(/</g,'&lt;')+'</div>').join('');
+  g+='<div class="day'+(ds===today?' today':'')+'"><div class=dnum>'+d+'</div>'+de+'</div>';}
+ document.getElementById('grid').innerHTML=g;
+ const cut=new Date(Date.now()+30*864e5).toISOString().slice(0,10);
+ document.getElementById('agenda').innerHTML=ALL.filter(x=>x.date>=today&&x.date<=cut)
+  .map(x=>'<div class=ag><span class=d>'+x.date.slice(5)+'</span><span class=t>'+(x.time||'')+'</span><span>'+x.title+' <span style="color:#666">· '+x.source+'</span></span></div>').join('')
+  ||'<div class=ag>Nothing scheduled in the next 30 days.</div>';}
+refresh();setInterval(refresh,60000);
+</script></body></html>

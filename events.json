@@ -1,0 +1,27 @@
+{
+  "events": [
+    {"date": "2026-11-03", "time": "09:00", "title": "Churn: open TD + Fifth Third + M&T", "source": "churn", "type": "deadline"},
+    {"date": "2026-11-04", "time": "12:00", "title": "Churn: Wednesday debit-txn run (Truist/BoT/Credit Human)", "source": "churn", "type": "recurring"},
+    {"date": "2026-11-05", "time": "09:00", "title": "Churn: open CapOne 360 + BMO + Hancock $5k slot", "source": "churn", "type": "deadline"},
+    {"date": "2026-11-06", "time": "08:00", "title": "Churn: Friday pipeline check", "source": "churn", "type": "recurring"},
+    {"date": "2026-11-07", "time": "09:00", "title": "Churn: CapOne 2nd push + Regions $1k + Citi call", "source": "churn", "type": "deadline"},
+    {"date": "2026-11-15", "time": "09:00", "title": "Amex $7.5k progress check", "source": "churn", "type": "recurring"},
+    {"date": "2026-11-19", "time": "08:00", "title": "School crunch begins (thru Dec 4): SCMT Mid 3, MGMT 466 pres + quiz, SCMT TA4", "source": "school", "type": "academic"},
+    {"date": "2026-11-24", "time": "08:00", "title": "SCMT in-class presentation + MGMT 466 online quiz (Thanksgiving travel cutoff)", "source": "school", "type": "academic"},
+    {"date": "2026-11-26", "time": "09:00", "title": "Churn: cancel Citi ($15 fee)", "source": "churn", "type": "deadline"},
+    {"date": "2026-11-27", "time": "09:00", "title": "Churn: cancel Bank of Texas", "source": "churn", "type": "deadline"},
+    {"date": "2026-11-28", "time": "09:00", "title": "Churn: cancel Regions ($8 fee)", "source": "churn", "type": "deadline"},
+    {"date": "2026-11-30", "time": "09:00", "title": "TD Bank bonus offer expires", "source": "churn", "type": "deadline"},
+    {"date": "2026-12-01", "time": "09:00", "title": "Churn: BMO month-2 push + next $5k rotation slot (Key)", "source": "churn", "type": "deadline"},
+    {"date": "2026-12-04", "time": "08:00", "title": "SCMT + MGMT 466 deliverables due", "source": "school", "type": "academic"},
+    {"date": "2026-12-08", "time": "09:00", "title": "Churn: cancel Credit Human (confirm bonus posted first)", "source": "churn", "type": "deadline"},
+    {"date": "2026-12-10", "time": "08:00", "title": "IBUS/MGMT 450 FINAL (confirmed) — Hawaii trip OK after", "source": "school", "type": "academic"},
+    {"date": "2026-12-11", "time": "00:00", "title": "Hawaii — Got Balls scuba trip (thru Dec 21)", "source": "travel", "type": "travel"},
+    {"date": "2026-12-15", "time": "09:00", "title": "BMO bonus offer expires", "source": "churn", "type": "deadline"},
+    {"date": "2027-01-20", "time": "09:00", "title": "Tax: 1099-INT reconciliation + summary", "source": "churn", "type": "tax"},
+    {"date": "2027-01-27", "time": "09:00", "title": "Amex $7,500 deposit deadline", "source": "churn", "type": "deadline"},
+    {"date": "2027-02-01", "time": "09:00", "title": "Hilton $2k spend check (due March)", "source": "money", "type": "deadline"},
+    {"date": "2027-03-01", "time": "09:00", "title": "Hilton Honors $2,000 spend deadline", "source": "money", "type": "deadline"},
+    {"date": "2027-04-15", "time": "09:00", "title": "Tax day: 2026 returns (bonus income on Schedule B)", "source": "churn", "type": "tax"}
+  ]
+}
