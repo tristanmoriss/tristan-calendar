@@ -59,7 +59,7 @@ const URL_=isLocal?'/events':'events.json';
 const DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],MON=['January','February','March','April','May','June','July','August','September','October','November','December'];
 const cls=e=>['deadline','academic','travel','tax'].includes(e.type)?e.type:(e.source&&e.source!=='manual'?e.source:'manual');
 const imp=e=>e.type==='deadline'||e.title.indexOf('\u{1F534}')===0;
-async function refresh(){try{const _d=await(await fetch(URL_)).json();ALL=Array.isArray(_d)?_d:(_d.events||[]);}catch(e){ALL=[];}
+async function refresh(){try{const _d=await(await fetch(URL_+(URL_.includes('?')?'&':'?')+'t='+Date.now(),{cache:'no-store'})).json();ALL=Array.isArray(_d)?_d:(_d.events||[]);}catch(e){ALL=[];}
  ALL.sort((a,b)=>(a.date+(a.time||'')).localeCompare(b.date+(b.time||'')));
  const y=view.getFullYear(),m=view.getMonth();
  document.getElementById('mLabel').textContent=MON[m];
