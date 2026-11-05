@@ -15,13 +15,20 @@
     {"date": "2026-12-01", "time": "09:00", "title": "Churn: BMO month-2 push + next $5k rotation slot (Key)", "source": "churn", "type": "deadline"},
     {"date": "2026-12-04", "time": "08:00", "title": "SCMT + MGMT 466 deliverables due", "source": "school", "type": "academic"},
     {"date": "2026-12-08", "time": "09:00", "title": "Churn: cancel Credit Human (confirm bonus posted first)", "source": "churn", "type": "deadline"},
-    {"date": "2026-12-10", "time": "08:00", "title": "IBUS/MGMT 450 FINAL (confirmed) — Hawaii trip OK after", "source": "school", "type": "academic"},
-    {"date": "2026-12-11", "time": "00:00", "title": "Hawaii — Got Balls scuba trip (thru Dec 21)", "source": "travel", "type": "travel"},
+    {"date": "2026-12-10", "time": "08:00", "title": "A&M finals END — free to travel (early-final option: departure BEFORE this possible)", "source": "school", "type": "academic"},
+    {"date": "2026-12-11", "time": "00:00", "title": "HAWAII diving stint 1 (thru Dec 21) — TENTATIVE, may shift, could start as early as Dec 8 (employer: $500 flight credit, $50/day per diem, hotel paid)", "source": "travel", "type": "travel"},
     {"date": "2026-12-15", "time": "09:00", "title": "BMO bonus offer expires", "source": "churn", "type": "deadline"},
+    {"date": "2026-12-21", "time": "09:00", "title": "Home Depot work stretch (thru Jan 2) — break #1 toward $1,500 tuition reimbursement", "source": "travel", "type": "travel"},
+    {"date": "2026-12-24", "time": "09:00", "title": "Home for Christmas (thru Dec 26)", "source": "travel", "type": "travel"},
+    {"date": "2027-01-03", "time": "09:00", "title": "CONTESTED WINDOW (thru Jan 15): OPTION A Hawaii stint 2 OR OPTION B China trip (Macao/HK + Beijing/Shanghai, out of Austin; visa ~$140 only if confirmed)", "source": "travel", "type": "travel"},
+    {"date": "2027-01-19", "time": "09:00", "title": "A&M spring classes begin — hard return date for any January trip", "source": "travel", "type": "travel"},
     {"date": "2027-01-20", "time": "09:00", "title": "Tax: 1099-INT reconciliation + summary", "source": "churn", "type": "tax"},
     {"date": "2027-01-27", "time": "09:00", "title": "Amex $7,500 deposit deadline", "source": "churn", "type": "deadline"},
     {"date": "2027-02-01", "time": "09:00", "title": "Hilton $2k spend check (due March)", "source": "money", "type": "deadline"},
     {"date": "2027-03-01", "time": "09:00", "title": "Hilton Honors $2,000 spend deadline", "source": "money", "type": "deadline"},
-    {"date": "2027-04-15", "time": "09:00", "title": "Tax day: 2026 returns (bonus income on Schedule B)", "source": "churn", "type": "tax"}
+    {"date": "2027-03-01", "time": "09:00", "title": "DEADLINE: book SECOND qualifying Home Depot break (spring 2027 or May–June, before internship) or $1,500 tuition reimbursement never pays out", "source": "travel", "type": "deadline"},
+    {"date": "2027-04-15", "time": "09:00", "title": "Tax day: 2026 returns (bonus income on Schedule B)", "source": "churn", "type": "tax"},
+    {"date": "2027-06-19", "time": "09:00", "title": "SWITZERLAND Swiss Alps (thru Jun 26) — TENTATIVE, paid by grandparents, may conflict with internship", "source": "travel", "type": "travel"},
+    {"date": "2027-09-01", "time": "09:00", "title": "SOUTH AMERICA overland ~3 months (thru Nov 30) — TENTATIVE, depends on internship end + return-offer timing", "source": "travel", "type": "travel"}
   ]
 }

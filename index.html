@@ -1,80 +1,97 @@
-<!doctype html><html><head><meta charset=utf-8><title>Tristan — Master Calendar</title>
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Tristan — Master Calendar</title>
 <style>
- body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;background:#0f1115;color:#e8e8ea;margin:0;padding:20px}
- h1{font-size:20px;text-align:center;margin:6px 0}
- .nav{display:flex;justify-content:center;gap:14px;margin:8px 0 12px}
- button{background:#181b21;color:#e8e8ea;border:1px solid #2a2f38;border-radius:6px;padding:6px 16px;cursor:pointer}
- .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;max-width:1150px;margin:0 auto}
- .dow{color:#9aa0aa;font-size:12px;text-align:center;padding:4px 0}
- .day{background:#181b21;min-height:96px;border-radius:8px;padding:6px;font-size:12px;cursor:pointer;transition:outline .1s}
- .day:hover{outline:1px solid #d4af37}
- .day.dim{opacity:.3}.day.today{outline:2px solid #d4af37}
- .dnum{color:#9aa0aa;margin-bottom:4px}
- .ev{border-radius:5px;padding:2px 6px;margin:2px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
- .deadline{background:#3a2020;border-left:3px solid #e06c5a}.academic{background:#1e2d3f;border-left:3px solid #6ca8e0}
- .travel{background:#203a2a;border-left:3px solid #6ce09a}.tax{background:#3a3416;border-left:3px solid #e0c05a}
- .manual,.recurring{background:#242830;border-left:3px solid #8a90a0}
- .ev.imp{font-weight:700}
- #modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center}
+ body{font-family:Helvetica,Arial,sans-serif;background:#fff;color:#111;margin:0;padding:14px}
+ h1{font-size:19px;text-align:center;margin:8px 0 2px}
+ .ym{ text-align:center;color:#555;font-size:13px;margin-bottom:8px}
+ .nav{display:flex;justify-content:center;gap:10px;margin:6px 0 10px}
+ button{background:#fff;border:1px solid #bbb;border-radius:4px;padding:5px 14px;cursor:pointer;font-size:13px}
+ .wrap{max-width:1150px;margin:0 auto}
+ .grid{display:grid;grid-template-columns:repeat(7,1fr);border:1px solid #999}
+ .dow{background:#eee;border:1px solid #999;border-top:none;font-size:11px;font-weight:bold;text-align:center;padding:4px 0;text-transform:uppercase}
+ .day{border:1px solid #999;border-top:none;min-height:104px;padding:3px;font-size:12px;cursor:pointer;background:#fff;position:relative}
+ .day:hover{background:#f5f9ff}
+ .day.empty{background:#f2f2f2;cursor:default}
+ .day.wknd{background:#fafafa}
+ .dnum{font-weight:bold;font-size:12px;margin-bottom:3px}
+ .day.today .dnum{color:#fff;background:#c00;display:inline-block;padding:0 5px;border-radius:2px}
+ .ev{font-size:10.5px;line-height:1.25;padding:1px 3px;margin:1px 0;border-left:3px solid #999;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:#f7f7f7}
+ .ev.deadline{border-color:#c00;background:#fdecec;font-weight:700}
+ .ev.academic{border-color:#1a5fb4;background:#eaf1fb}
+ .ev.travel{border-color:#2e7d32;background:#eaf6ec}
+ .ev.tax{border-color:#b8860b;background:#fdf6e3}
+ .ev.manual,.ev.recurring{border-color:#777}
+ .more{font-size:10px;color:#555;padding-left:3px}
+ /* day detail modal */
+ #modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:9}
  #modal.open{display:flex}
- .panel{background:#16181d;border:1px solid #2a2f38;border-radius:14px;padding:22px;width:min(480px,92vw)}
- .panel h2{margin:0 0 4px;font-size:18px;color:#d4af37}
- .panel .sub{color:#9aa0aa;font-size:12px;margin-bottom:12px}
- .panel .ag{display:flex;gap:10px;align-items:baseline;background:#1e2127;border-radius:8px;padding:8px 10px;margin:6px 0;font-size:14px}
- .panel .ag .t{color:#9aa0aa;font-size:12px;min-width:40px}
- .del{margin-left:auto;color:#e06c5a;font-weight:700;cursor:pointer}
- .panel form{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
- input,select{background:#22252c;color:#e8e8ea;border:1px solid #2a2f38;border-radius:6px;padding:8px}
- input[type=submit]{background:#d4af37;color:#111;border:0;font-weight:600;cursor:pointer}
- .back{margin-top:14px;width:100%;background:#22252c}
+ .panel{background:#fff;border:1px solid #999;border-radius:6px;padding:16px;width:min(460px,94vw);box-shadow:0 8px 30px rgba(0,0,0,.3)}
+ .panel h2{margin:0;font-size:17px}
+ .panel .sub{color:#666;font-size:12px;margin:2px 0 10px}
+ .panel .ag{display:flex;gap:8px;align-items:baseline;border-bottom:1px solid #ddd;padding:6px 2px;font-size:13px}
+ .panel .ag .t{color:#666;font-size:11px;min-width:38px}
+ .panel .ag.deadline{font-weight:700}
+ .del{margin-left:auto;color:#c00;font-weight:bold;cursor:pointer;padding:0 4px}
+ .panel form{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+ input,select{border:1px solid #999;border-radius:3px;padding:6px;font-size:13px;background:#fff}
+ input[type=submit]{background:#2e7d32;color:#fff;border:0;font-weight:bold;cursor:pointer}
+ .back{margin-top:14px;width:100%;background:#eee;border:1px solid #999}
+ .hint{display:none;color:#2e7d32;font-size:12px;margin:8px 0}
 </style></head><body>
-<h1 id="mLabel" style="cursor:pointer" onclick="closeDay()"></h1>
+<h1 id="mLabel" onclick="closeDay()" style="cursor:pointer"></h1>
+<div class="ym" id="yLabel"></div>
 <div class="nav"><button onclick="mv(-1)">‹ Prev</button><button onclick="view=new Date();closeDay();refresh()">Today</button><button onclick="mv(1)">Next ›</button></div>
-<div class="grid" id="grid"></div>
+<div class="wrap"><div class="grid" id="grid"></div></div>
 <div id="modal"><div class="panel">
- <h2 id="dLabel"></h2><div class="sub" id="dSub"></div><div class="hint" style="display:none;color:#d4af37;font-size:12px;margin:6px 0">Read-only on phone — to add or remove, text the calendar bot on Telegram.</div>
+ <h2 id="dLabel"></h2><div class="sub" id="dSub"></div>
+ <div class="hint" id="hint">Read-only on phone — to add or remove events, text the calendar bot on Telegram.</div>
  <div id="dayEvents"></div>
- <form id="df"><input type=hidden name=date id="dfDate"><input type=time name=time><input name=title placeholder="Add event…" required style="flex:1;min-width:160px">
+ <form id="df" style="display:none"><input type=hidden name=date id="dfDate"><input type=time name=time style="width:90px"><input name=title placeholder="Add event…" required style="flex:1;min-width:140px">
  <select name=source><option>manual</option><option>school</option><option>churn</option><option>money</option><option>travel</option><option>dues</option><option>pawn</option></select>
  <select name=type><option>manual</option><option>deadline</option><option>academic</option><option>travel</option><option>tax</option></select>
  <input type=submit value=Add></form>
  <button class="back" onclick="closeDay()">← Back to month</button>
 </div></div>
 <script>
-let view=new Date(),ALL=[],openDate=null;const isLocal=['127.0.0.1','localhost'].includes(location.hostname);
+let view=new Date(),ALL=[],openDate=null;
+const isLocal=['127.0.0.1','localhost'].includes(location.hostname);
+const URL_=isLocal?'/events':'events.json';
 const DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],MON=['January','February','March','April','May','June','July','August','September','October','November','December'];
 const cls=e=>['deadline','academic','travel','tax'].includes(e.type)?e.type:(e.source&&e.source!=='manual'?e.source:'manual');
-const imp=e=>e.type==='deadline'||e.title.startsWith('\u{1F534}');
-async function refresh(){ALL=await(await fetch('/events')).json();ALL.sort((a,b)=>(a.date+(a.time||'')).localeCompare(b.date+(b.time||'')));
+const imp=e=>e.type==='deadline'||e.title.indexOf('\u{1F534}')===0;
+async function refresh(){try{ALL=await(await fetch(URL_)).json();}catch(e){ALL=[];}
+ ALL.sort((a,b)=>(a.date+(a.time||'')).localeCompare(b.date+(b.time||'')));
  const y=view.getFullYear(),m=view.getMonth();
- document.getElementById('mLabel').textContent=MON[m]+' '+y;
+ document.getElementById('mLabel').textContent=MON[m];
+ document.getElementById('yLabel').textContent=y;
  const start=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();
  const today=new Date().toISOString().slice(0,10);
  let g=DOW.map(d=>'<div class=dow>'+d+'</div>').join('');
- for(let i=0;i<start;i++)g+='<div class="day dim"></div>';
+ for(let i=0;i<start;i++)g+='<div class="day empty"></div>';
  for(let d=1;d<=days;d++){const ds=y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
-  const de=ALL.filter(e=>e.date===ds).slice(0,3).map(e=>'<div class="ev '+cls(e)+(imp(e)?' imp':'')+'">'+(imp(e)?'\u{1F534} ':'')+(e.time?e.time+' ':'')+e.title.replace(/</g,'&lt;')+'</div>').join('');
-  const more=ALL.filter(e=>e.date===ds).length>3?'<div class=dnum style="color:#666">+'+(ALL.filter(e=>e.date===ds).length-3)+' more</div>':'';
-  g+='<div class="day'+(ds===today?' today':'')+'" onclick="openDay(\''+ds+'\')"><div class=dnum>'+d+'</div>'+de+more+'</div>';}
+  const wd=new Date(y,m,d).getDay(),evs=ALL.filter(e=>e.date===ds);
+  const de=evs.slice(0,4).map(e=>'<div class="ev '+cls(e)+(imp(e)?' imp':'')+'" title="'+e.title.replace(/"/g,'&quot;')+'">'+(imp(e)?'\u{1F534} ':'')+(e.time?e.time+' ':'')+e.title.replace(/</g,'&lt;')+'</div>').join('');
+  const more=evs.length>4?'<div class=more>+'+(evs.length-4)+' more</div>':'';
+  g+='<div class="day'+(wd===0||wd===6?' wknd':'')+(ds===today?' today':'')+'" onclick="openDay(\''+ds+'\')"><div class=dnum>'+d+'</div>'+de+more+'</div>';}
  document.getElementById('grid').innerHTML=g;
  if(openDate)renderDay();}
-function mv(n){view.setMonth(view.getMonth()+n);openDate=null;document.getElementById('modal').classList.remove('open');refresh();}
-function openDay(ds){openDate=ds;renderDay();document.getElementById('modal').classList.add('open');document.querySelector('.panel form').style.display=isLocal?'flex':'none';document.querySelector('.hint').style.display=isLocal?'none':'block';document.querySelectorAll('.del').forEach(x=>x.style.display=isLocal?'inline':'none');}
+function mv(n){view.setMonth(view.getMonth()+n);closeDay();refresh();}
+function openDay(ds){openDate=ds;renderDay();document.getElementById('modal').classList.add('open');}
 function closeDay(){openDate=null;document.getElementById('modal').classList.remove('open');}
 function renderDay(){if(!openDate)return;
- document.getElementById('dLabel').textContent=new Date(openDate+'T12:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+ document.getElementById('dLabel').textContent=new Date(openDate+'T12:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
  const evs=ALL.filter(e=>e.date===openDate);
  document.getElementById('dSub').textContent=evs.length?evs.length+' event'+(evs.length>1?'s':''):'No events yet';
  document.getElementById('dfDate').value=openDate;
- document.getElementById('dayEvents').innerHTML=evs.map(e=>'<div class=ag><span class=t>'+(e.time||'')+'</span><span>'+(imp(e)?'\u{1F534} ':'')+e.title+' <span style="color:#666">· '+e.source+'</span></span><span class=del onclick="delEv(\''+e.date+'\',\''+e.title.replace(/'/g,"\\'")+'\')">\u2715</span></div>').join('')
-  ||'<div style="color:#666;font-size:13px">Nothing on this day.</div>';}
+ document.getElementById('dayEvents').innerHTML=evs.map(e=>'<div class="ag '+cls(e)+'"><span class=t>'+(e.time||'')+'</span><span>'+(imp(e)?'\u{1F534} ':'')+e.title+' <span style="color:#888">· '+e.source+'</span></span><span class=del onclick="delEv(\''+e.date+'\',\''+e.title.replace(/'/g,"\\'")+'\')">\u2715</span></div>').join('')
+  ||'<div style="color:#888;font-size:13px;padding:6px 2px">Nothing scheduled.</div>';}
 document.getElementById('df').onsubmit=async ev=>{ev.preventDefault();const fd=new FormData(ev.target);
- await fetch('/events',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.fromEntries(fd))});
+ await fetch(URL_,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.fromEntries(fd))});
  ev.target.querySelector('[name=title]').value='';refresh();};
-async function delEv(d,t){await fetch('/events',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({date:d,title:t})});refresh();}
+async function delEv(d,t){await fetch(URL_,{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({date:d,title:t})});refresh();}
 document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeDay();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDay();
- if(e.key==='ArrowLeft'&&e.target.tagName!=='INPUT'){view.setMonth(view.getMonth()-1);refresh();}
- if(e.key==='ArrowRight'&&e.target.tagName!=='INPUT'){view.setMonth(view.getMonth()+1);refresh();}});
+ if(e.key==='ArrowLeft'&&e.target.tagName!=='INPUT'){mv(-1);}
+ if(e.key==='ArrowRight'&&e.target.tagName!=='INPUT'){mv(1);}});
 refresh();
 </script></body></html>
