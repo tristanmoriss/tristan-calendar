@@ -56,9 +56,9 @@ button,.vbtn{padding:7px 10px;font-size:12px;border-radius:6px}
 .dot.manual,.dot.recurring,.dot.churn{background:#8a90a0}
 .dot.churn-kat{background:#5bc8c8}
 .moren{font-size:9px;color:#8a90a0}
-.wday{padding:10px 12px;margin:8px 0;border-radius:10px}
+.wday{padding:0;margin:0;border:none;border-radius:0;border-bottom:1px solid #2a2f38}.wgrid{margin:0}
 .wh{font-size:10px}.wh b{font-size:16px}
-.wday .ev{font-size:12.5px;line-height:1.45;padding:3px 4px 3px 6px;margin:5px 0;white-space:normal;border-radius:4px}
+.wday .ev{font-size:15px;line-height:1.5;padding:10px 6px;margin:0;border-radius:0;white-space:normal;color:#dfe2e8}.et{color:#d4af37;font-weight:700;font-size:13px;margin-right:4px}.ev.free{color:#5a5f68;font-size:13px;padding:12px 6px}
 #modal{align-items:flex-end}
 .panel{width:100%;max-width:100vw;border-radius:14px 14px 0 0;padding:16px 16px 26px;max-height:92vh;overflow-y:auto}
 .panel h2{font-size:19px}
@@ -106,7 +106,7 @@ var LOCAL=['127.0.0.1','localhost'].includes(location.hostname);
 var REPO='tristan-calendar';
 var PK='cal_pat_'+REPO;
 var URL_=LOCAL?'/events':'events.json';
-var BUILD='v6 · Nov 05 10:53PM CST';var DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+var BUILD='v7 · Nov 05 11:04PM CST';
 var MON=['January','February','March','April','May','June','July','August','September','October','November','December'];
 function pat(){return localStorage.getItem(PK)||''}
 function todayStr(){var d=new Date(Date.now()-new Date().getTimezoneOffset()*60000);return d.toISOString().slice(0,10)}
@@ -133,7 +133,7 @@ async function refresh(){
   try{var r=await fetch(URL_+(URL_.includes('?')?'&':'?')+'t='+Date.now(),{cache:'no-store'});
     var d=await r.json();ALL=Array.isArray(d)?d:(d.events||[]);}catch(e){ALL=[]}
   ALL.sort(function(a,b){return (a.date+(a.time||'')).localeCompare(b.date+(b.time||''))});
-  document.getElementById('mLabel').textContent=MON[view.getMonth()];
+  document.getElementById('mLabel').textContent=(vmode==='day')?(DOW[view.getDay()]+', '+MON[view.getMonth()]+' '+view.getDate()):(vmode==='week')?('Week of '+MON[view.getMonth()]+' '+view.getDate()):MON[view.getMonth()];
   document.getElementById('yLabel').textContent=view.getFullYear();
   var b=document.getElementById('buildStamp');if(b)b.textContent=BUILD;
   document.querySelectorAll('.vbtn').forEach(function(b){
@@ -175,25 +175,26 @@ function renderWeek(){
   document.getElementById('grid').innerHTML=g;
 }
 function renderDayList(){
-  var base=new Date(view.getFullYear(),view.getMonth(),view.getDate());
-  base.setDate(base.getDate()-base.getDay());
   var today=todayStr();
   var rows='';
-  for(var i=0;i<7;i++){
+  var n=(vmode==='week')?7:1;
+  var base=new Date(view.getFullYear(),view.getMonth(),view.getDate());
+  base.setDate(base.getDate()-((vmode==='week')?base.getDay():0));
+  for(var i=0;i<n;i++){
     var d2=new Date(base);d2.setDate(base.getDate()+i);
     var ds=d2.getFullYear()+'-'+String(d2.getMonth()+1).padStart(2,'0')+'-'+String(d2.getDate()).padStart(2,'0');
     var evs=ALL.filter(function(e){return e.date===ds&&pass(e)});
     rows+='<div class="wday'+(ds===today?' sel':'')+'" onclick="openDay(\''+ds+'\')">';
-    rows+='<div class="wh"><b>'+DOW[d2.getDay()]+' '+d2.getDate()+'</b>'+(ds===today?' <span class=tdy>TODAY</span>':'')+'</div>';
-    if(evs.length)rows+=evs.map(function(e){return '<div class="ev '+cls(e)+(imp(e)?' imp':'')+'">'+(imp(e)&&(e.title||'').indexOf('\u{1F534}')!==0?'\u{1F534} ':'')+(e.time?e.time+' ':'')+(e.title||'').replace(/</g,'&lt;')+'</div>'}).join('');
-    else rows+='<div class="ev" style="border-color:#333;color:#666">&mdash;</div>';
+    rows+='<div class="wh"><b>'+(vmode==='week'?(DOW[d2.getDay()]+' '+d2.getDate()):(DOW[d2.getDay()]+', '+MON[d2.getMonth()]+' '+d2.getDate()))+'</b>'+(ds===today?' <span class=tdy>TODAY</span>':'')+'</div>';
+    if(evs.length)rows+=evs.map(function(e){return '<div class="ev '+cls(e)+(imp(e)&&(e.title||'').indexOf('\u{1F534}')!==0?'\u{1F534} ':'')+(e.time?'<span class=et>'+e.time+'</span> ':'')+e.title.replace(/</g,'&lt;')+'</div>'}).join('');
+    else rows+='<div class="ev free">Nothing scheduled &mdash; enjoy it.</div>';
     rows+='</div>';
   }
   document.getElementById('grid').innerHTML='<div class="wgrid">'+rows+'</div>';
 }
 function setMode(m){vmode=m;closeDay();refresh()}
 function setFilter(f){FILTER=f;closeDay();refresh()}
-function mv(n){view.setMonth(view.getMonth()+n);closeDay();refresh()}
+function mv(n){if(vmode==='month')view.setMonth(view.getMonth()+n);else if(vmode==='week')view.setDate(view.getDate()+7*n);else view.setDate(view.getDate()+n);closeDay();refresh()}
 function goToday(){view=new Date();closeDay();refresh()}
 function canEdit(){return LOCAL||pat()}
 function askPat(){var t=prompt('Paste a GitHub fine-grained token with Contents write on '+REPO+'.\nIt is stored only in this browser (localStorage).');if(t){localStorage.setItem(PK,t.trim());syncEditUI();refresh()}}
