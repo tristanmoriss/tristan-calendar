@@ -74,7 +74,7 @@ var LOCAL=['127.0.0.1','localhost'].includes(location.hostname);
 var REPO='tristan-calendar';
 var PK='cal_pat_'+REPO;
 var URL_=LOCAL?'/events':'events.json';
-var BUILD='v3 · built 2026-11-05 21:5x CST';var DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+var BUILD='v4 · built Nov 05 08:38PM CST';var DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 var MON=['January','February','March','April','May','June','July','August','September','October','November','December'];
 function pat(){return localStorage.getItem(PK)||''}
 function todayStr(){var d=new Date(Date.now()-new Date().getTimezoneOffset()*60000);return d.toISOString().slice(0,10)}
@@ -105,8 +105,8 @@ async function refresh(){
   document.getElementById('yLabel').textContent=view.getFullYear();
   var b=document.getElementById('buildStamp');if(b)b.textContent=BUILD;
   document.querySelectorAll('.vbtn').forEach(function(b){
-    if(['day','week','month'].indexOf(b.dataset.v)>=0)b.classList.toggle('on',b.dataset.v===vmode);
-    else b.classList.toggle('on',b.dataset.v===FILTER);
+    if(b.dataset.v==='day'||b.dataset.v==='week'||b.dataset.v==='month')b.classList.toggle('on',b.dataset.v===vmode);
+    else if(b.dataset.v)b.classList.toggle('on',b.dataset.v===FILTER);
   });
   if(vmode==='month')renderMonth(view.getFullYear(),view.getMonth());
   else if(vmode==='week')renderWeek();
@@ -168,6 +168,7 @@ function askPat(){var t=prompt('Paste a GitHub fine-grained token with Contents 
 function syncEditUI(){
   var has=canEdit();
   document.getElementById('df').style.display=has?'flex':'none';
+  document.querySelectorAll('.gdel').forEach(function(x){x.style.display='inline-block'});
   var pb=document.getElementById('patBtn');
   pb.style.display=(!LOCAL&&!pat())?'block':'none';
   var ok=document.getElementById('tokOk');
@@ -185,7 +186,7 @@ function renderDay(){
   document.getElementById('dSub').textContent=evs.length?evs.length+' event'+(evs.length>1?'s':''):'No events';
   document.getElementById('dfDate').value=openDate;
   document.getElementById('dayEvents').innerHTML=evs.map(function(e,i){
-    return '<div class="ag"><span class=t>'+(e.time||'')+'</span><span>'+(imp(e)&&(e.title||'').indexOf('\u{1F534}')!==0?'\u{1F534} ':'')+e.title+' <span style="color:#888">&#183; '+(e.source||'')+'</span></span><span class=del onclick="delEv(\''+openDate+'\',\''+(e.title||'').replace(/'/g,"\\'")+'\')">&#10005;</span></div>'
+    return '<div class="ag"><span class=t>'+(e.time||'')+'</span><span>'+(imp(e)&&(e.title||'').indexOf('\u{1F534}')!==0?'\u{1F534} ':'')+e.title+' <span style="color:#888">&#183; '+(e.source||'')+'</span></span><span class="del gdel" onclick="delEv(\''+openDate+'\',\''+(e.title||'').replace(/'/g,"\\'")+'\')">&#10005;</span></div>'
   }).join('')||'<div style="color:#888;font-size:13px;padding:6px 2px">Nothing scheduled.</div>';
 }
 document.getElementById('df').onsubmit=async function(ev){
@@ -198,6 +199,7 @@ document.getElementById('df').onsubmit=async function(ev){
   ev.target.querySelector('[name=title]').value='';
 };
 async function delEv(d,t){
+  if(!LOCAL&&!pat()){askPat();if(!pat())return}
   if(LOCAL){await fetch(URL_,{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({date:d,title:t})});refresh();return;}
   var list=ALL.filter(function(e){return !(e.date===d&&e.title===t)});
   var ok=await ghSave(list);if(ok)refresh();
