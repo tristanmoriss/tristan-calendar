@@ -21,7 +21,7 @@ button,.vbtn{background:#181b21;color:#e8e8ea;border:1px solid #2a2f38;border-ra
 .ev.academic{border-color:#6ca8e0;background:#16222e;color:#b7d3f0}
 .ev.travel{border-color:#6ce09a;background:#14231a;color:#b5e8c6}
 .ev.tax{border-color:#e0c05a;background:#2a2412;color:#ead9a0}
-.ev.manual,.ev.recurring{border-color:#8a90a0;background:#1e2127;color:#c5c9d3}
+.ev.manual,.ev.recurring,.ev.churn{border-color:#8a90a0;background:#1e2127;color:#c5c9d3}
 .ev.imp{font-weight:700}
 .more{font-size:10px;color:#8a90a0;padding-left:3px}
 #modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:9}
@@ -37,18 +37,17 @@ button,.vbtn{background:#181b21;color:#e8e8ea;border:1px solid #2a2f38;border-ra
 input,select{border:1px solid #3a3f4a;border-radius:5px;padding:7px;font-size:13px;background:#22252c;color:#e8e8ea}
 input[type=submit]{background:#d4af37;color:#111;border:0;font-weight:700;cursor:pointer}
 .back{margin-top:14px;width:100%;background:#22252c;color:#e8e8ea;border:1px solid #3a3f4a}
-.hint{display:none;color:#d4af37;font-size:12px;margin:8px 0}
-.wgrid{max-width:760px;margin:0 auto}
-.wday{border:1px solid #3a3f4a;border-radius:8px;padding:8px;margin:6px 0;background:#181b21;cursor:pointer}
-.wday.sel{outline:2px solid #d4af37}
-.wh{color:#9aa0aa;font-size:12px;margin-bottom:4px}.wh b{color:#e8e8ea;font-size:14px}
-.tdy{background:#d4af37;color:#111;font-size:10px;font-weight:700;padding:1px 6px;border-radius:3px;margin-left:6px}
+.patbtn{margin:8px 0;font-size:12px;background:#22252c;color:#d4af37;border:1px dashed #d4af37;border-radius:6px;padding:7px 10px;cursor:pointer;width:100%}
+.tokok{color:#6ce09a;font-size:11px;margin-top:4px}
 @media(max-width:760px){.wrap{max-width:100%}.day{min-height:64px;font-size:10px;padding:2px}.dnum{font-size:10px}.ev{font-size:8.5px}.more{font-size:8px}body{padding:8px}h1{font-size:16px}.panel{width:96vw}}
 </style></head><body>
 <h1 id="mLabel" onclick="closeDay()"></h1>
 <div class="ym" id="yLabel"></div>
 <div class="nav">
-<button class="vbtn" data-v="all" onclick="setFilter('all')">All</button><button class="vbtn" data-v="churn" onclick="setFilter('churn')">Churn</button><button class="vbtn" data-v="general" onclick="setFilter('general')">General</button><button class="vbtn" data-v="day" onclick="setMode('day')">Day</button>
+<button class="vbtn" data-v="all" onclick="setFilter('all')">All</button>
+<button class="vbtn" data-v="churn" onclick="setFilter('churn')">Churn</button>
+<button class="vbtn" data-v="general" onclick="setFilter('general')">General</button>
+<button class="vbtn" data-v="day" onclick="setMode('day')">Day</button>
 <button class="vbtn" data-v="week" onclick="setMode('week')">Week</button>
 <button class="vbtn" data-v="month" onclick="setMode('month')">Month</button>
 <button onclick="mv(-1)">&#8249;</button>
@@ -58,39 +57,60 @@ input[type=submit]{background:#d4af37;color:#111;border:0;font-weight:700;cursor
 <div class="wrap"><div class="grid" id="grid"></div></div>
 <div id="modal"><div class="panel">
 <h2 id="dLabel"></h2><div class="sub" id="dSub"></div>
-<div class="hint" id="hint">Read-only on phone — text the calendar bot on Telegram to add or remove events.</div>
+<button class="patbtn" id="patBtn" style="display:none" onclick="askPat()">Enable phone editing — paste a GitHub token</button>
+<div class="tokok" id="tokOk" style="display:none"></div>
 <div id="dayEvents"></div>
-<form id="df" style="display:none"><input type=hidden name=date id=dfDate><input type=time name=time style="width:90px"><input name=title placeholder="Add event..." required style="flex:1;min-width:140px">
-<select name=source><option>manual</option><option>school</option><option>churn</option><option>money</option><option>travel</option><option>dues</option></select>
+<form id="df"><input type=hidden name=date id=dfDate><input type=time name=time style="width:90px"><input name=title placeholder="Add event..." required style="flex:1;min-width:140px">
+<select name=source><option>manual</option><option>churn</option><option>school</option><option>money</option><option>travel</option><option>dues</option></select>
 <select name=type><option>manual</option><option>deadline</option><option>academic</option><option>travel</option><option>tax</option></select>
 <input type=submit value=Add></form>
 <button class="back" onclick="closeDay()">&#8592; Back</button>
 </div></div>
 <script>
-var view=new Date(),ALL=[],openDate=null,vmode=(innerWidth<761)?'day':'month';
-var isLocal=['127.0.0.1','localhost'].includes(location.hostname);
-var URL_=isLocal?'/events':'events.json';
-var FILTER='all';
-function pass(e){var s=(e.source||"");if(FILTER==='all')return true;if(FILTER==='churn')return s.indexOf('churn')>=0;return s.indexOf('churn')<0;};var DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+var view=new Date(),ALL=[],openDate=null,FILTER='all';
+var vmode=(innerWidth<761)?'day':'month';
+var LOCAL=['127.0.0.1','localhost'].includes(location.hostname);
+var REPO='tristan-calendar';
+var PK='cal_pat_'+REPO;
+var URL_=LOCAL?'/events':'events.json';
+var DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 var MON=['January','February','March','April','May','June','July','August','September','October','November','December'];
+function pat(){return localStorage.getItem(PK)||''}
 function todayStr(){var d=new Date(Date.now()-new Date().getTimezoneOffset()*60000);return d.toISOString().slice(0,10)}
 function cls(e){return ['deadline','academic','travel','tax'].includes(e.type)?e.type:(e.source&&e.source!=='manual'?e.source:'manual')}
-function imp(e){return e.type==='deadline'||e.title.indexOf('\u{1F534}')===0}
-
+function imp(e){return e.type==='deadline'||(e.title||'').indexOf('\u{1F534}')===0}
+function pass(e){if(FILTER==='all')return true;var s=(e.source||'');if(FILTER==='churn')return s.indexOf('churn')>=0;return s.indexOf('churn')<0}
+async function ghGet(){var r=await fetch('https://api.github.com/repos/tristanmoriss/'+REPO+'/contents/events.json',{headers:pat()?{Authorization:'Bearer '+pat(),Accept:'application/vnd.github+json'}:{Accept:'application/vnd.github+json'}});if(!r.ok)return null;return r.json()}
+async function ghSave(events){
+  if(!pat()){alert('Need a token first — tap "Enable phone editing".');return false}
+  var cur=await ghGet();
+  var body={message:'phone edit '+new Date().toISOString(),content:'',
+            branch:'main'};
+  if(cur){body.sha=cur.sha;body.content=cur.content}
+  var decoded=(cur&&cur.content)?atob(cur.content.replace(/\s/g,'')):'{"events":[]}'
+  var doc;try{doc=JSON.parse(decoded)}catch(e){doc={events:[]}}
+  var list=Array.isArray(doc)?doc:(doc.events||[]);
+  list=events;
+  var b64=btoa(unescape(encodeURIComponent(JSON.stringify({events:list},null,1))));
+  body.content=b64;
+  var r=await fetch('https://api.github.com/repos/tristanmoriss/'+REPO+'/contents/events.json',{method:'PUT',headers:{Authorization:'Bearer '+pat(),Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify(body)});
+  return r.ok;
+}
 async function refresh(){
   try{var r=await fetch(URL_+(URL_.includes('?')?'&':'?')+'t='+Date.now(),{cache:'no-store'});
     var d=await r.json();ALL=Array.isArray(d)?d:(d.events||[]);}catch(e){ALL=[]}
   ALL.sort(function(a,b){return (a.date+(a.time||'')).localeCompare(b.date+(b.time||''))});
-  var y=view.getFullYear(),m=view.getMonth();
-  document.getElementById('mLabel').textContent=MON[m];
-  document.getElementById('yLabel').textContent=y;
-  if(vmode==='month')renderMonth(y,m);
+  document.getElementById('mLabel').textContent=MON[view.getMonth()];
+  document.getElementById('yLabel').textContent=view.getFullYear();
+  document.querySelectorAll('.vbtn').forEach(function(b){
+    if(['day','week','month'].indexOf(b.dataset.v)>=0)b.classList.toggle('on',b.dataset.v===vmode);
+    else b.classList.toggle('on',b.dataset.v===FILTER);
+  });
+  if(vmode==='month')renderMonth(view.getFullYear(),view.getMonth());
   else if(vmode==='week')renderWeek();
   else renderDayList();
-  document.querySelectorAll('.vbtn').forEach(function(b){if(b.dataset.v==='day'||b.dataset.v==='week'||b.dataset.v==='month')b.classList.toggle('on',b.dataset.v===vmode);else b.classList.toggle('on',b.dataset.v===FILTER);});
   if(openDate)renderDay();
 }
-
 function renderMonth(y,m){
   var start=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();
   var today=todayStr();
@@ -100,13 +120,12 @@ function renderMonth(y,m){
     var ds=y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
     var wd=new Date(y,m,d).getDay();
     var evs=ALL.filter(function(e){return e.date===ds&&pass(e)});
-    var de=evs.slice(0,4).map(function(e){return '<div class="ev '+cls(e)+(imp(e)?' imp':'')+'" title="'+e.title.replace(/"/g,'&quot;')+'">'+(imp(e)?'\u{1F534} ':'')+(e.time?e.time+' ':'')+e.title.replace(/</g,'&lt;')+'</div>'}).join('');
+    var de=evs.slice(0,4).map(function(e){return '<div class="ev '+cls(e)+(imp(e)?' imp':'')+'">'+(imp(e)?'\u{1F534} ':'')+(e.time?e.time+' ':'')+e.title.replace(/</g,'&lt;')+'</div>'}).join('');
     var more=evs.length>4?'<div class=more>+'+(evs.length-4)+' more</div>':'';
     g+='<div class="day'+(wd===0||wd===6?' wknd':'')+(ds===today?' today':'')+'" onclick="openDay(\''+ds+'\')"><div class=dnum>'+d+'</div>'+de+more+'</div>';
   }
   document.getElementById('grid').innerHTML=g;
 }
-
 function renderWeek(){
   var base=new Date(view.getFullYear(),view.getMonth(),view.getDate());
   base.setDate(base.getDate()-base.getDay());
@@ -114,14 +133,13 @@ function renderWeek(){
   var g=DOW.map(function(d){return '<div class=dow>'+d+'</div>'}).join('');
   for(var i=0;i<7;i++){
     var d2=new Date(base);d2.setDate(base.getDate()+i);
-    var ds=d2.getFullYear()+'-'+String(d2.getMonth()+1).padStart(2,'0')-'+String(d2.getDate()).padStart(2,'0');
+    var ds=d2.getFullYear()+'-'+String(d2.getMonth()+1).padStart(2,'0')+'-'+String(d2.getDate()).padStart(2,'0');
     var evs=ALL.filter(function(e){return e.date===ds&&pass(e)});
-    var de=evs.map(function(e){return '<div class="ev '+cls(e)+(imp(e)?' imp':'')+'">'+(imp(e)?'\u{1F534} ':'')+(e.time?e.time+' ':'')+e.title.replace(/</g,'&lt;')+'</div>'}).join('');
+    var de=evs.map(function(e){return '<div class="ev '+cls(e)+(imp(e)?' imp':'')+'" title="'+(e.title||'').replace(/"/g,'&quot;')+'">'+(imp(e)?'\u{1F534} ':'')+(e.time?e.time+' ':'')+(e.title||'').replace(/</g,'&lt;')+'</div>'}).join('');
     g+='<div class="day'+(ds===today?' today':'')+'" style="min-height:140px" onclick="openDay(\''+ds+'\')"><div class=dnum>'+d2.getDate()+'</div>'+de+'</div>';
   }
   document.getElementById('grid').innerHTML=g;
 }
-
 function renderDayList(){
   var base=new Date(view.getFullYear(),view.getMonth(),view.getDate());
   base.setDate(base.getDate()-base.getDay());
@@ -129,27 +147,34 @@ function renderDayList(){
   var rows='';
   for(var i=0;i<7;i++){
     var d2=new Date(base);d2.setDate(base.getDate()+i);
-    var ds=d2.getFullYear()+'-'+String(d2.getMonth()+1).padStart(2,'0')-'+String(d2.getDate()).padStart(2,'0');
+    var ds=d2.getFullYear()+'-'+String(d2.getMonth()+1).padStart(2,'0')+'-'+String(d2.getDate()).padStart(2,'0');
     var evs=ALL.filter(function(e){return e.date===ds&&pass(e)});
     rows+='<div class="wday'+(ds===today?' sel':'')+'" onclick="openDay(\''+ds+'\')">';
     rows+='<div class="wh"><b>'+DOW[d2.getDay()]+' '+d2.getDate()+'</b>'+(ds===today?' <span class=tdy>TODAY</span>':'')+'</div>';
-    if(evs.length)rows+=evs.map(function(e){return '<div class="ev '+cls(e)+(imp(e)?' imp':'')+'">'+(imp(e)?'\u{1F534} ':'')+(e.time?e.time+' ':'')+e.title.replace(/</g,'&lt;')+'</div>'}).join('');
+    if(evs.length)rows+=evs.map(function(e){return '<div class="ev '+cls(e)+(imp(e)?' imp':'')+'">'+(imp(e)?'\u{1F534} ':'')+(e.time?e.time+' ':'')+(e.title||'').replace(/</g,'&lt;')+'</div>'}).join('');
     else rows+='<div class="ev" style="border-color:#333;color:#666">&mdash;</div>';
     rows+='</div>';
   }
   document.getElementById('grid').innerHTML='<div class="wgrid">'+rows+'</div>';
 }
-
-function setMode(m){vmode=m;refresh();}
-function setFilter(f){FILTER=f;refresh();}
-function mv(n){view.setMonth(view.getMonth()+n);closeDay();refresh();}
-function goToday(){view=new Date();closeDay();refresh();}
-function openDay(ds){openDate=ds;renderDay();document.getElementById('modal').classList.add('open');
-  document.getElementById('df').style.display=isLocal?'flex':'none';
-  document.getElementById('hint').style.display=isLocal?'none':'block';
-  document.querySelectorAll('.del').forEach(function(x){x.style.display=isLocal?'inline-block':'none'});}
-function closeDay(){openDate=null;document.getElementById('modal').classList.remove('open');}
-
+function setMode(m){vmode=m;closeDay();refresh()}
+function setFilter(f){FILTER=f;closeDay();refresh()}
+function mv(n){view.setMonth(view.getMonth()+n);closeDay();refresh()}
+function goToday(){view=new Date();closeDay();refresh()}
+function canEdit(){return LOCAL||pat()}
+function askPat(){var t=prompt('Paste a GitHub fine-grained token with Contents write on '+REPO+'.\nIt is stored only in this browser (localStorage).');if(t){localStorage.setItem(PK,t.trim());syncEditUI();refresh()}}
+function syncEditUI(){
+  var has=canEdit();
+  document.getElementById('df').style.display=has?'flex':'none';
+  var pb=document.getElementById('patBtn');
+  pb.style.display=(!LOCAL&&!pat())?'block':'none';
+  var ok=document.getElementById('tokOk');
+  ok.style.display=(!LOCAL&&pat())?'block':'none';
+  if(ok)ok.textContent=(pat()?'Token saved. Add + \u2715 delete are active on phone.':'');
+  document.querySelectorAll('.del').forEach(function(x){x.style.display=has?'inline-block':'none'});
+}
+function openDay(ds){openDate=ds;renderDay();syncEditUI();document.getElementById('modal').classList.add('open')}
+function closeDay(){openDate=null;document.getElementById('modal').classList.remove('open')}
 function renderDay(){
   if(!openDate)return;
   var d2=new Date(openDate+'T12:00');
@@ -157,22 +182,29 @@ function renderDay(){
   var evs=ALL.filter(function(e){return e.date===openDate&&pass(e)});
   document.getElementById('dSub').textContent=evs.length?evs.length+' event'+(evs.length>1?'s':''):'No events';
   document.getElementById('dfDate').value=openDate;
-  document.getElementById('dayEvents').innerHTML=evs.map(function(e){
-    return '<div class="ag '+cls(e)+'"><span class=t>'+(e.time||'')+'</span><span>'+(imp(e)?'\u{1F534} ':'')+e.title+' <span style="color:#888">&#183; '+e.source+'</span></span><span class=del onclick="delEv(\''+e.date+'\',\''+e.title.replace(/'/g,"\\'")+'\')">&#10005;</span></div>';
+  document.getElementById('dayEvents').innerHTML=evs.map(function(e,i){
+    return '<div class="ag"><span class=t>'+(e.time||'')+'</span><span>'+(imp(e)?'\u{1F534} ':'')+e.title+' <span style="color:#888">&#183; '+(e.source||'')+'</span></span><span class=del onclick="delEv(\''+openDate+'\',\''+(e.title||'').replace(/'/g,"\\'")+'\')">&#10005;</span></div>'
   }).join('')||'<div style="color:#888;font-size:13px;padding:6px 2px">Nothing scheduled.</div>';
 }
-
 document.getElementById('df').onsubmit=async function(ev){
   ev.preventDefault();var fd=new FormData(ev.target);
-  await fetch(URL_,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.fromEntries(fd))});
-  ev.target.querySelector('[name=title]').value='';refresh();
+  var obj=Object.fromEntries(fd);
+  if(LOCAL){await fetch(URL_,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(obj)});refresh();}
+  else{var list=ALL.concat();obj.date=obj.date.slice(0,10);list.push(obj);
+    list.sort(function(a,b){return (a.date+(a.time||'')).localeCompare(b.date+(b.time||''))});
+    var ok=await ghSave(list);if(ok){pat()&&refresh();}}
+  ev.target.querySelector('[name=title]').value='';
 };
-async function delEv(d,t){await fetch(URL_,{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({date:d,title:t})});refresh();}
-document.getElementById('modal').addEventListener('click',function(e){if(e.target.id==='modal')closeDay();});
+async function delEv(d,t){
+  if(LOCAL){await fetch(URL_,{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({date:d,title:t})});refresh();return;}
+  var list=ALL.filter(function(e){return !(e.date===d&&e.title===t)});
+  var ok=await ghSave(list);if(ok)refresh();
+}
+document.getElementById('modal').addEventListener('click',function(e){if(e.target.id==='modal')closeDay()});
 document.addEventListener('keydown',function(e){
   if(e.key==='Escape')closeDay();
   if(e.key==='ArrowLeft'&&e.target.tagName!=='INPUT')mv(-1);
   if(e.key==='ArrowRight'&&e.target.tagName!=='INPUT')mv(1);
 });
-setMode(vmode);refresh();
+refresh();
 </script></body></html>
