@@ -66,7 +66,7 @@
  <button class="back" onclick="closeDay()">← Back to month</button>
 </div></div>
 <script>
-let view=new Date(),ALL=[],openDate=null;let today=new Date().toISOString().slice(0,10);
+let view=new Date(),ALL=[],openDate=null;let today=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);
 const isLocal=['127.0.0.1','localhost'].includes(location.hostname);
 const URL_=isLocal?'/events':'events.json';
 const DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],MON=['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -78,7 +78,7 @@ async function refresh(){try{const _d=await(await fetch(URL_+(URL_.includes('?')
  document.getElementById('mLabel').textContent=MON[m];
  document.getElementById('yLabel').textContent=y;
  const start=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();
- const today=new Date().toISOString().slice(0,10);
+ const today=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);
  let g=DOW.map(d=>'<div class=dow>'+d+'</div>').join('');
  for(let i=0;i<start;i++)g+='<div class="day empty"></div>';
  for(let d=1;d<=days;d++){const ds=y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
