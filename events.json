@@ -38,6 +38,13 @@
   {
    "date": "2026-11-13",
    "time": "23:59",
+   "title": "SCMT \u2014 RFI document DUE (Nov 13)",
+   "source": "school",
+   "type": "deadline"
+  },
+  {
+   "date": "2026-11-13",
+   "time": "23:59",
    "title": "RFI document DUE \u2014 Tristan (school; confirm class + details)",
    "source": "school",
    "type": "deadline"
