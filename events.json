@@ -1,40 +1,242 @@
 {
-  "events": [
-    {"date": "2026-11-03", "time": "09:00", "title": "Churn: open TD + Fifth Third + M&T", "source": "churn", "type": "deadline"},
-    {"date": "2026-11-04", "time": "12:00", "title": "Churn: Wednesday debit-txn run (Truist/BoT/Credit Human)", "source": "churn", "type": "recurring"},
-    {"date": "2026-11-05", "time": "09:00", "title": "Churn: open CapOne 360 + BMO + Hancock $5k slot", "source": "churn", "type": "deadline"},
-    {"date": "2026-11-06", "time": "08:00", "title": "Churn: Friday pipeline check", "source": "churn", "type": "recurring"},
-    {"date": "2026-11-07", "time": "09:00", "title": "Churn: CapOne 2nd push + Regions $1k + Citi call", "source": "churn", "type": "deadline"},
-    {"date": "2026-11-15", "time": "09:00", "title": "Amex $7.5k progress check", "source": "churn", "type": "recurring"},
-    {"date": "2026-11-19", "time": "08:00", "title": "School crunch window opens (thru Dec 4): SCMT 465 Midterm 3, MGMT 466 presentations + Quiz 3, SCMT 465 Team Activity 4", "source": "school", "type": "academic"},
-    {"date": "2026-11-24", "time": "08:00", "title": "SCMT 465 in-class team presentation (NextContinent) + MGMT 466 online quiz same day — Thanksgiving travel cutoff", "source": "school", "type": "academic"},
-    {"date": "2026-11-24", "time": "09:00", "title": "Money: Citi $400 bonus progress check (needs $3k via 2 direct deposits)", "source": "money", "type": "deadline"},
-    {"date": "2026-11-25", "time": "09:00", "title": "Money: Bank of Texas $300 bonus progress check ($200 deposits + 10 debit purchases + email proof of enrollment)", "source": "money", "type": "deadline"},
-    {"date": "2026-11-26", "time": "09:00", "title": "Churn: cancel Citi ($15 fee) + Citi $400 bonus follow-up check", "source": "churn", "type": "deadline"},
-    {"date": "2026-11-26", "time": "09:00", "title": "Money: Regions $400 bonus progress check (~$1k push from Capital One)", "source": "money", "type": "deadline"},
-    {"date": "2026-11-27", "time": "09:00", "title": "Churn: cancel Bank of Texas + BoT $300 bonus follow-up check", "source": "churn", "type": "deadline"},
-    {"date": "2026-11-28", "time": "09:00", "title": "Churn: cancel Regions ($8 fee) + Regions $400 bonus follow-up check", "source": "churn", "type": "deadline"},
-    {"date": "2026-11-30", "time": "09:00", "title": "TD Bank bonus offer expires", "source": "churn", "type": "deadline"},
-    {"date": "2026-12-01", "time": "09:00", "title": "Churn: BMO month-2 push + next $5k rotation slot (Key)", "source": "churn", "type": "deadline"},
-    {"date": "2026-12-04", "time": "08:00", "title": "Double deadline: MGMT 466 group-project deliverables (35% of grade) + SCMT 465 deliverable", "source": "school", "type": "academic"},
-    {"date": "2026-12-04", "time": "09:00", "title": "RECURRING: Shiller CAPE market check — alert Tristan if below 15", "source": "money", "type": "recurring"},
-    {"date": "2026-12-07", "time": "09:00", "title": "RECURRING monthly: Fifth Third + Chime — keep $500/mo direct deposit running (opened 2026-10-02)", "source": "money", "type": "recurring"},
-    {"date": "2026-12-08", "time": "09:00", "title": "Churn: Credit Human — progress check ($131 transfer out first; then in-person checking + 2x$250 Home Depot DDs + 10 debit txns >$10), confirm $300 bonus posted, then cancel", "source": "churn", "type": "deadline"},
-    {"date": "2026-12-10", "time": "08:00", "title": "IBUS/MGMT 450 final exam (confirmed, slot TBD) — A&M finals end, free to travel (early-final departure possible)", "source": "school", "type": "academic"},
-    {"date": "2026-12-11", "time": "", "title": "HAWAII scuba diving trip (thru Dec 21) — LOCKED, no conflict with Dec 10 final confirmed (employer: $500 flight credit, $50/day per diem, hotel paid)", "source": "travel", "type": "travel"},
-    {"date": "2026-12-15", "time": "09:00", "title": "BMO bonus offer expires", "source": "churn", "type": "deadline"},
-    {"date": "2026-12-21", "time": "09:00", "title": "Home Depot work stretch (thru Jan 2) — break #1 toward $1,500 tuition reimbursement", "source": "travel", "type": "travel"},
-    {"date": "2026-12-24", "time": "09:00", "title": "Home for Christmas (thru Dec 26)", "source": "travel", "type": "travel"},
-    {"date": "2027-01-03", "time": "09:00", "title": "CONTESTED WINDOW (thru Jan 15): OPTION A Hawaii stint 2 OR OPTION B China trip (Macao/HK + Beijing/Shanghai, out of Austin; visa ~$140 only if confirmed)", "source": "travel", "type": "travel"},
-    {"date": "2027-01-19", "time": "09:00", "title": "A&M spring classes begin — hard return date for any January trip", "source": "travel", "type": "travel"},
-    {"date": "2027-01-20", "time": "09:00", "title": "Tax: 1099-INT reconciliation + summary", "source": "churn", "type": "tax"},
-    {"date": "2027-01-27", "time": "09:00", "title": "DEADLINE: Amex checking $7,500 deposit (opened 2026-10-27)", "source": "churn", "type": "deadline"},
-    {"date": "2027-02-01", "time": "09:00", "title": "Hilton $2k spend check (due March)", "source": "money", "type": "deadline"},
-    {"date": "2027-03-01", "time": "09:00", "title": "Hilton Honors $2,000 spend deadline (March 2027, exact day TBD)", "source": "money", "type": "deadline"},
-    {"date": "2027-03-01", "time": "09:00", "title": "DEADLINE: book SECOND qualifying Home Depot break (spring 2027 or May–June, before internship) or $1,500 tuition reimbursement never pays out", "source": "travel", "type": "deadline"},
-    {"date": "2027-04-15", "time": "09:00", "title": "Tax day: 2026 returns (bonus income on Schedule B)", "source": "churn", "type": "tax"},
-    {"date": "2027-05-01", "time": "", "title": "Tristan lease ends May 2027 — rent-by-card spend method ends ($15/card fee)", "source": "money", "type": "deadline"},
-    {"date": "2027-06-19", "time": "", "title": "Swiss Alps family trip (thru Jun 26) — TENTATIVE, depends on summer internship; paid by grandparents", "source": "travel", "type": "travel"},
-    {"date": "2027-09-01", "time": "", "title": "South America -> Central America overland trip (~3 months, thru ~Nov 30) — PLANNING, dates TBD: starts ~3 months after May/Aug graduation + ~10-week internship", "source": "travel", "type": "travel"}
-  ]
+ "events": [
+  {
+   "date": "2026-11-05",
+   "time": "09:00",
+   "title": "Churn: open CapOne 360 + BMO + Hancock $5k slot",
+   "source": "churn",
+   "type": "deadline"
+  },
+  {
+   "date": "2026-11-06",
+   "time": "08:00",
+   "title": "Churn: Friday pipeline check",
+   "source": "churn",
+   "type": "recurring"
+  },
+  {
+   "date": "2026-11-07",
+   "time": "09:00",
+   "title": "Churn: CapOne 2nd push + Regions $1k + Citi call",
+   "source": "churn",
+   "type": "deadline"
+  },
+  {
+   "date": "2026-11-15",
+   "time": "09:00",
+   "title": "Amex $7.5k progress check",
+   "source": "churn",
+   "type": "recurring"
+  },
+  {
+   "date": "2026-11-19",
+   "time": "08:00",
+   "title": "School crunch window opens (thru Dec 4): SCMT 465 Midterm 3, MGMT 466 presentations + Quiz 3, SCMT 465 Team Activity 4",
+   "source": "school",
+   "type": "academic"
+  },
+  {
+   "date": "2026-11-24",
+   "time": "08:00",
+   "title": "SCMT 465 in-class team presentation (NextContinent) + MGMT 466 online quiz same day \u2014 Thanksgiving travel cutoff",
+   "source": "school",
+   "type": "academic"
+  },
+  {
+   "date": "2026-11-24",
+   "time": "09:00",
+   "title": "Money: Citi $400 bonus progress check (needs $3k via 2 direct deposits)",
+   "source": "money",
+   "type": "deadline"
+  },
+  {
+   "date": "2026-11-25",
+   "time": "09:00",
+   "title": "Money: Bank of Texas $300 bonus progress check ($200 deposits + 10 debit purchases + email proof of enrollment)",
+   "source": "money",
+   "type": "deadline"
+  },
+  {
+   "date": "2026-11-26",
+   "time": "09:00",
+   "title": "Churn: cancel Citi ($15 fee) + Citi $400 bonus follow-up check",
+   "source": "churn",
+   "type": "deadline"
+  },
+  {
+   "date": "2026-11-26",
+   "time": "09:00",
+   "title": "Money: Regions $400 bonus progress check (~$1k push from Capital One)",
+   "source": "money",
+   "type": "deadline"
+  },
+  {
+   "date": "2026-11-27",
+   "time": "09:00",
+   "title": "Churn: cancel Bank of Texas + BoT $300 bonus follow-up check",
+   "source": "churn",
+   "type": "deadline"
+  },
+  {
+   "date": "2026-11-28",
+   "time": "09:00",
+   "title": "Churn: cancel Regions ($8 fee) + Regions $400 bonus follow-up check",
+   "source": "churn",
+   "type": "deadline"
+  },
+  {
+   "date": "2026-11-30",
+   "time": "09:00",
+   "title": "TD Bank bonus offer expires",
+   "source": "churn",
+   "type": "deadline"
+  },
+  {
+   "date": "2026-12-01",
+   "time": "09:00",
+   "title": "Churn: BMO month-2 push + next $5k rotation slot (Key)",
+   "source": "churn",
+   "type": "deadline"
+  },
+  {
+   "date": "2026-12-04",
+   "time": "08:00",
+   "title": "Double deadline: MGMT 466 group-project deliverables (35% of grade) + SCMT 465 deliverable",
+   "source": "school",
+   "type": "academic"
+  },
+  {
+   "date": "2026-12-04",
+   "time": "09:00",
+   "title": "RECURRING: Shiller CAPE market check \u2014 alert Tristan if below 15",
+   "source": "money",
+   "type": "recurring"
+  },
+  {
+   "date": "2026-12-07",
+   "time": "09:00",
+   "title": "RECURRING monthly: Fifth Third + Chime \u2014 keep $500/mo direct deposit running (opened 2026-10-02)",
+   "source": "money",
+   "type": "recurring"
+  },
+  {
+   "date": "2026-12-08",
+   "time": "09:00",
+   "title": "Churn: Credit Human \u2014 progress check ($131 transfer out first; then in-person checking + 2x$250 Home Depot DDs + 10 debit txns >$10), confirm $300 bonus posted, then cancel",
+   "source": "churn",
+   "type": "deadline"
+  },
+  {
+   "date": "2026-12-10",
+   "time": "08:00",
+   "title": "IBUS/MGMT 450 final exam (confirmed, slot TBD) \u2014 A&M finals end, free to travel (early-final departure possible)",
+   "source": "school",
+   "type": "academic"
+  },
+  {
+   "date": "2026-12-11",
+   "time": "",
+   "title": "HAWAII scuba diving trip (thru Dec 21) \u2014 LOCKED, no conflict with Dec 10 final confirmed (employer: $500 flight credit, $50/day per diem, hotel paid)",
+   "source": "travel",
+   "type": "travel"
+  },
+  {
+   "date": "2026-12-15",
+   "time": "09:00",
+   "title": "BMO bonus offer expires",
+   "source": "churn",
+   "type": "deadline"
+  },
+  {
+   "date": "2026-12-21",
+   "time": "09:00",
+   "title": "Home Depot work stretch (thru Jan 2) \u2014 break #1 toward $1,500 tuition reimbursement",
+   "source": "travel",
+   "type": "travel"
+  },
+  {
+   "date": "2026-12-24",
+   "time": "09:00",
+   "title": "Home for Christmas (thru Dec 26)",
+   "source": "travel",
+   "type": "travel"
+  },
+  {
+   "date": "2027-01-03",
+   "time": "09:00",
+   "title": "CONTESTED WINDOW (thru Jan 15): OPTION A Hawaii stint 2 OR OPTION B China trip (Macao/HK + Beijing/Shanghai, out of Austin; visa ~$140 only if confirmed)",
+   "source": "travel",
+   "type": "travel"
+  },
+  {
+   "date": "2027-01-19",
+   "time": "09:00",
+   "title": "A&M spring classes begin \u2014 hard return date for any January trip",
+   "source": "travel",
+   "type": "travel"
+  },
+  {
+   "date": "2027-01-20",
+   "time": "09:00",
+   "title": "Tax: 1099-INT reconciliation + summary",
+   "source": "churn",
+   "type": "tax"
+  },
+  {
+   "date": "2027-01-27",
+   "time": "09:00",
+   "title": "DEADLINE: Amex checking $7,500 deposit (opened 2026-10-27)",
+   "source": "churn",
+   "type": "deadline"
+  },
+  {
+   "date": "2027-02-01",
+   "time": "09:00",
+   "title": "Hilton $2k spend check (due March)",
+   "source": "money",
+   "type": "deadline"
+  },
+  {
+   "date": "2027-03-01",
+   "time": "09:00",
+   "title": "Hilton Honors $2,000 spend deadline (March 2027, exact day TBD)",
+   "source": "money",
+   "type": "deadline"
+  },
+  {
+   "date": "2027-03-01",
+   "time": "09:00",
+   "title": "DEADLINE: book SECOND qualifying Home Depot break (spring 2027 or May\u2013June, before internship) or $1,500 tuition reimbursement never pays out",
+   "source": "travel",
+   "type": "deadline"
+  },
+  {
+   "date": "2027-04-15",
+   "time": "09:00",
+   "title": "Tax day: 2026 returns (bonus income on Schedule B)",
+   "source": "churn",
+   "type": "tax"
+  },
+  {
+   "date": "2027-05-01",
+   "time": "",
+   "title": "Tristan lease ends May 2027 \u2014 rent-by-card spend method ends ($15/card fee)",
+   "source": "money",
+   "type": "deadline"
+  },
+  {
+   "date": "2027-06-19",
+   "time": "",
+   "title": "Swiss Alps family trip (thru Jun 26) \u2014 TENTATIVE, depends on summer internship; paid by grandparents",
+   "source": "travel",
+   "type": "travel"
+  },
+  {
+   "date": "2027-09-01",
+   "time": "",
+   "title": "South America -> Central America overland trip (~3 months, thru ~Nov 30) \u2014 PLANNING, dates TBD: starts ~3 months after May/Aug graduation + ~10-week internship",
+   "source": "travel",
+   "type": "travel"
+  }
+ ]
 }
