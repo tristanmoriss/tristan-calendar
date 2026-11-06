@@ -29,6 +29,13 @@
    "type": "recurring"
   },
   {
+   "date": "2026-11-16",
+   "time": "",
+   "title": "Kat CapOne DD#1 $500 (window Nov 16-21) via Fidelity CMA \u2014 never WF hub",
+   "source": "churn",
+   "type": "deadline"
+  },
+  {
    "date": "2026-11-19",
    "time": "08:00",
    "title": "School crunch window opens (thru Dec 4): SCMT 465 Midterm 3, MGMT 466 presentations + Quiz 3, SCMT 465 Team Activity 4",
@@ -113,6 +120,13 @@
    "type": "recurring"
   },
   {
+   "date": "2026-12-05",
+   "time": "",
+   "title": "Hancock $5,000 into savings \u2014 LOCK deadline (60d hold \u2192 Feb 3)",
+   "source": "churn",
+   "type": "deadline"
+  },
+  {
    "date": "2026-12-07",
    "time": "09:00",
    "title": "RECURRING monthly: Fifth Third + Chime \u2014 keep $500/mo direct deposit running (opened 2026-10-02)",
@@ -194,6 +208,13 @@
    "time": "09:00",
    "title": "Hilton $2k spend check (due March)",
    "source": "money",
+   "type": "deadline"
+  },
+  {
+   "date": "2027-02-03",
+   "time": "",
+   "title": "Hancock: $5k hold FREES + $2,000 chk DD due + $300 deadline",
+   "source": "churn",
    "type": "deadline"
   },
   {
