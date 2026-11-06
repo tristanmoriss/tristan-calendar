@@ -158,7 +158,7 @@ function renderMonth(y,m){
     var narrow=innerWidth<761;
     var de= (narrow?evs.slice(0,3):evs.slice(0,4)).map(function(e){return '<div class="ev '+cls(e)+(imp(e)?' imp':'')+'">'+(imp(e)&&(e.title||'').indexOf('\u{1F534}')!==0?'\u{1F534} ':'')+e.title.replace(/</g,'&lt;')+'</div>'}).join('')
       +(narrow&&evs.length>3?'<span class=dots>'+evs.slice(3,7).map(function(e){return '<span class="dot '+cls(e)+'"></span>'}).join('')+'</span>':'')
-      +(evs.length>(narrow?7:4)?'<div class=moren>+'+(evs.length-(narrow?7:4))+' more</div>':'');
+      ;var more=(evs.length>(narrow?7:4))?'<div class=moren>+'+(evs.length-(narrow?7:4))+' more</div>':'';
     g+='<div class="day'+(wd===0||wd===6?' wknd':'')+(ds===today?' today':'')+'" onclick="openDay(\''+ds+'\')"><div class=dnum>'+d+'</div>'+de+more+'</div>';
   }
   document.getElementById('grid').innerHTML=g;
