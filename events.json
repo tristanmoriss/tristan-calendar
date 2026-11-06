@@ -227,6 +227,13 @@
   {
    "date": "2026-12-15",
    "time": "09:00",
+   "title": "Churn (Kat): MidFirst verify DoC terms -> open ONLY if Chex pacing allows (CapOne+FNBO = 2 pulls by Dec; 3rd same-window risks flag), else Jan ($300)",
+   "source": "churn",
+   "type": "deadline"
+  },
+  {
+   "date": "2026-12-15",
+   "time": "09:00",
    "title": "BMO bonus offer expires",
    "source": "churn",
    "type": "deadline"
@@ -279,6 +286,13 @@
    "title": "Churn: M&T offer dies (DROPPED \u2014 TX unverified)",
    "source": "churn",
    "type": "deadline"
+  },
+  {
+   "date": "2027-01-01",
+   "time": "09:00",
+   "title": "Churn: NO PUSHES Jan 1-3 ALL pipelines - monthly liquidity trough (reimbursement lands after rent is fronted)",
+   "source": "churn",
+   "type": "recurring"
   },
   {
    "date": "2027-01-03",
