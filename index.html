@@ -40,7 +40,38 @@ input[type=submit]{background:#d4af37;color:#111;border:0;font-weight:700;cursor
 .back{margin-top:14px;width:100%;background:#22252c;color:#e8e8ea;border:1px solid #3a3f4a}
 .patbtn{margin:8px 0;font-size:12px;background:#22252c;color:#d4af37;border:1px dashed #d4af37;border-radius:6px;padding:7px 10px;cursor:pointer;width:100%}
 .tokok{color:#6ce09a;font-size:11px;margin-top:4px}
-@media(max-width:760px){.wrap{max-width:100%}.day{min-height:64px;font-size:10px;padding:2px}.dnum{font-size:10px}.ev{font-size:8.5px}.more{font-size:8px}body{padding:8px}h1{font-size:16px}.panel{width:96vw}}
+@media(max-width:760px){
+body{padding:8px}h1{font-size:22px;font-weight:800}
+.ym{font-size:12px}
+.nav{gap:5px;margin:8px 0 10px}
+button,.vbtn{padding:7px 10px;font-size:12px;border-radius:6px}
+.grid{border:none}
+.dow{font-size:10px;padding:5px 0;border-left:none}
+.day{min-height:58px;padding:3px 4px;border-radius:0}
+.dnum{font-size:13px;font-weight:800;margin-bottom:2px}
+.day .ev{display:none}
+.dots{display:flex;flex-wrap:wrap;gap:3px;padding:1px 0}
+.dot{width:7px;height:7px;border-radius:50%}
+.dot.deadline{background:#e06c5a}.dot.academic{background:#6ca8e0}.dot.travel{background:#6ce09a}.dot.tax{background:#e0c05a}
+.dot.manual,.dot.recurring,.dot.churn{background:#8a90a0}
+.dot.churn-kat{background:#5bc8c8}
+.moren{font-size:9px;color:#8a90a0}
+.wday{padding:10px 12px;margin:8px 0;border-radius:10px}
+.wh{font-size:10px}.wh b{font-size:16px}
+.wday .ev{font-size:12.5px;line-height:1.45;padding:3px 4px 3px 6px;margin:5px 0;white-space:normal;border-radius:4px}
+#modal{align-items:flex-end}
+.panel{width:100%;max-width:100vw;border-radius:14px 14px 0 0;padding:16px 16px 26px;max-height:92vh;overflow-y:auto}
+.panel h2{font-size:19px}
+.panel .ag{font-size:14px;padding:11px 2px}
+.panel .sub{font-size:12px}
+del,.del{padding:6px 12px;font-size:15px}
+.panel form{gap:8px}
+input,select{padding:10px;font-size:14px}
+input[type=submit]{padding:10px 14px}
+.back{padding:11px;font-size:14px}
+.patbtn{font-size:13px;padding:12px}
+}
+.desk-ev{display:revert}
 </style></head><body>
 <h1 id="mLabel" onclick="closeDay()"></h1>
 <div class="ym" id="yLabel"></div>
@@ -75,7 +106,7 @@ var LOCAL=['127.0.0.1','localhost'].includes(location.hostname);
 var REPO='tristan-calendar';
 var PK='cal_pat_'+REPO;
 var URL_=LOCAL?'/events':'events.json';
-var BUILD='v5 · built Nov 05 09:38PM CST';var DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+var BUILD='v6 · Nov 05 10:53PM CST';
 var MON=['January','February','March','April','May','June','July','August','September','October','November','December'];
 function pat(){return localStorage.getItem(PK)||''}
 function todayStr(){var d=new Date(Date.now()-new Date().getTimezoneOffset()*60000);return d.toISOString().slice(0,10)}
