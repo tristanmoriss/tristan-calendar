@@ -20,7 +20,9 @@ padding:10px 14px 8px;border-bottom:1px solid var(--line)}
 color:var(--text);font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 8px}
 .nbtn:active{background:#232730}
 .nbtn.today{width:auto;padding:0 14px;font-size:12.5px;font-weight:700;color:var(--gold)}
-.row2{display:flex;gap:6px;margin-top:8px;overflow-x:auto;scrollbar-width:none}
+#filters{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.chiprow{display:flex;gap:6px}
+.chiprow .vbtn{flex:1 1 0;text-align:center;justify-content:center}
 .row2::-webkit-scrollbar{display:none}
 .vbtn{background:#1a1d24;border:1px solid var(--line);color:var(--text);border-radius:8px;
 padding:7px 13px;font-size:12.5px;cursor:pointer;white-space:nowrap;flex:0 0 auto}
@@ -75,8 +77,8 @@ white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#dfe1e6}
 #mBig{font-size:26px}
 }
 @media(max-width:760px){
-#top .row2{display:flex;flex-wrap:wrap;gap:6px;overflow:visible}
-#top .row2 .vbtn{flex:1 1 auto;min-width:66px;text-align:center;padding:8px 4px;font-size:12px;white-space:normal}
+#top .row2{display:flex;flex-direction:column;gap:6px;overflow:visible}
+#top .chiprow .vbtn{flex:1 1 0;text-align:center;padding:8px 4px;font-size:12px;white-space:normal}
 }
 </style></head><body>
 <header id="top">
@@ -107,7 +109,7 @@ white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#dfe1e6}
  </div>
 </div>
 <script>
-var BUILD='v8 · Nov 05 11:29PM CST';
+var BUILD='v8 · Nov 05 11:32PM CST';
 var OWNER='tristanmoriss',REPO='tristan-calendar';
 var DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 var M3=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -144,8 +146,12 @@ async function refresh(){
 }
 function render(){
  var f=document.getElementById('filters');f.innerHTML='';
- FILTERS.forEach(function(x){var b=document.createElement('button');b.className='vbtn'+(FILTER===x[0]?' on':'');b.textContent=x[1];b.onclick=function(){FILTER=x[0];render()};f.appendChild(b)});
- ['day','week','month'].forEach(function(m){var b=document.createElement('button');b.className='vbtn'+(MODE===m?' on':'');b.textContent=m.toUpperCase();b.onclick=function(){MODE=m;render()};f.appendChild(b)});
+ var fr=document.createElement('div');fr.className='chiprow';
+ FILTERS.forEach(function(x){var b=document.createElement('button');b.className='vbtn'+(FILTER===x[0]?' on':'');b.textContent=x[1];b.onclick=function(){FILTER=x[0];render()};fr.appendChild(b)});
+ f.appendChild(fr);
+ var vr=document.createElement('div');vr.className='chiprow';
+ ['day','week','month'].forEach(function(m){var b=document.createElement('button');b.className='vbtn'+(MODE===m?' on':'');b.textContent=m.toUpperCase();b.onclick=function(){MODE=m;render()};vr.appendChild(b)});
+ f.appendChild(vr);
  if(MODE==='month'){tBig.textContent=MONL[view.getMonth()]+' '+view.getFullYear();tSub.textContent=BUILD}
  else{tBig.textContent=(MODE==='day')?(DOW[view.getDay()]+', '+M3[view.getMonth()]+' '+view.getDate()):('Week of '+M3[view.getMonth()]+' '+view.getDate());
   tSub.textContent=MONL[view.getMonth()]+' '+view.getFullYear()+' · '+BUILD}
