@@ -22,6 +22,7 @@ button,.vbtn{background:#181b21;color:#e8e8ea;border:1px solid #2a2f38;border-ra
 .ev.travel{border-color:#6ce09a;background:#14231a;color:#b5e8c6}
 .ev.tax{border-color:#e0c05a;background:#2a2412;color:#ead9a0}
 .ev.manual,.ev.recurring,.ev.churn{border-color:#8a90a0;background:#1e2127;color:#c5c9d3}
+.ev.churn-kat{border-color:#5bc8c8;background:#12262a;color:#a8dede}
 .ev.imp{font-weight:700}
 .more{font-size:10px;color:#8a90a0;padding-left:3px}
 #modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:9}
@@ -46,7 +47,7 @@ input[type=submit]{background:#d4af37;color:#111;border:0;font-weight:700;cursor
 <div class="ym" style="font-size:10px;color:#5a5f68" id="buildStamp"></div>
 <div class="nav">
 <button class="vbtn" data-v="all" onclick="setFilter('all')">All</button>
-<button class="vbtn" data-v="churn" onclick="setFilter('churn')">Churn</button>
+<button class="vbtn" data-v="mine" onclick="setFilter('mine')">Mine</button><button class="vbtn" data-v="kat" onclick="setFilter('kat')">Kat&#8217;s</button>
 <button class="vbtn" data-v="general" onclick="setFilter('general')">General</button>
 <button class="vbtn" data-v="day" onclick="setMode('day')">Day</button>
 <button class="vbtn" data-v="week" onclick="setMode('week')">Week</button>
@@ -74,13 +75,13 @@ var LOCAL=['127.0.0.1','localhost'].includes(location.hostname);
 var REPO='tristan-calendar';
 var PK='cal_pat_'+REPO;
 var URL_=LOCAL?'/events':'events.json';
-var BUILD='v4 · built Nov 05 08:38PM CST';var DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+var BUILD='v5 · built Nov 05 09:38PM CST';var DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 var MON=['January','February','March','April','May','June','July','August','September','October','November','December'];
 function pat(){return localStorage.getItem(PK)||''}
 function todayStr(){var d=new Date(Date.now()-new Date().getTimezoneOffset()*60000);return d.toISOString().slice(0,10)}
 function cls(e){return ['deadline','academic','travel','tax'].includes(e.type)?e.type:(e.source&&e.source!=='manual'?e.source:'manual')}
 function imp(e){return e.type==='deadline'||(e.title||'').indexOf('\u{1F534}')===0}
-function pass(e){if(FILTER==='all')return true;var s=(e.source||'');if(FILTER==='churn')return s.indexOf('churn')>=0;return s.indexOf('churn')<0}
+function pass(e){if(FILTER==='all')return true;var s=(e.source||'');if(FILTER==='mine')return s==='churn';if(FILTER==='kat')return s==='churn-kat';return s.indexOf('churn')<0}
 async function ghGet(){var r=await fetch('https://api.github.com/repos/tristanmoriss/'+REPO+'/contents/events.json',{headers:pat()?{Authorization:'Bearer '+pat(),Accept:'application/vnd.github+json'}:{Accept:'application/vnd.github+json'}});if(!r.ok)return null;return r.json()}
 async function ghSave(events){
   if(!pat()){alert('Need a token first — tap "Enable phone editing".');return false}

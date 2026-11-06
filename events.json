@@ -60,7 +60,7 @@
    "date": "2026-11-16",
    "time": "",
    "title": "Kat CapOne DD#1 $500 (window Nov 16-21) via Fidelity CMA \u2014 never WF hub",
-   "source": "churn",
+   "source": "churn-kat",
    "type": "deadline"
   },
   {
@@ -193,7 +193,7 @@
    "date": "2026-12-08",
    "time": "09:00",
    "title": "Churn (Kat): FNBO open (code 250BIZ), start 10x $10+ debit txns \u2014 counter to Jan 8",
-   "source": "churn",
+   "source": "churn-kat",
    "type": "deadline"
   },
   {
@@ -228,7 +228,7 @@
    "date": "2026-12-15",
    "time": "09:00",
    "title": "Churn (Kat): MidFirst verify DoC terms -> open ONLY if Chex pacing allows (CapOne+FNBO = 2 pulls by Dec; 3rd same-window risks flag), else Jan ($300)",
-   "source": "churn",
+   "source": "churn-kat",
    "type": "deadline"
   },
   {
@@ -305,21 +305,21 @@
    "date": "2027-01-04",
    "time": "09:00",
    "title": "Churn (Kat): CapOne 360 DD#2 $500 via Fidelity CMA \u2014 week of Jan 4 (moved from Dec; $1k Jan reserve covers)",
-   "source": "churn",
+   "source": "churn-kat",
    "type": "deadline"
   },
   {
    "date": "2027-01-08",
    "time": "09:00",
    "title": "Churn (Kat): FNBO 10th debit txn due (31d from Dec 8 open)",
-   "source": "churn",
+   "source": "churn-kat",
    "type": "deadline"
   },
   {
    "date": "2027-01-13",
    "time": "09:00",
    "title": "Churn (Kat): HARD last-push date CapOne DD (Jan 19 window minus 3d ACH + 3d retry)",
-   "source": "churn",
+   "source": "churn-kat",
    "type": "deadline"
   },
   {
@@ -333,7 +333,7 @@
    "date": "2027-01-19",
    "time": "09:00",
    "title": "Churn (Kat): CapOne DD window CLOSES \u2014 both $500 DDs must be registered",
-   "source": "churn",
+   "source": "churn-kat",
    "type": "deadline"
   },
   {
@@ -361,7 +361,7 @@
    "date": "2027-01-28",
    "time": "09:00",
    "title": "Churn (Kat): Amex checking verify eligibility (card 3+mo or HYSA), OPEN this week",
-   "source": "churn",
+   "source": "churn-kat",
    "type": "deadline"
   },
   {
@@ -375,7 +375,7 @@
    "date": "2027-02-01",
    "time": "09:00",
    "title": "Churn (Kat): Amex offer HARD deadline \u2014 account must be open ($300)",
-   "source": "churn",
+   "source": "churn-kat",
    "type": "deadline"
   },
   {
@@ -396,7 +396,7 @@
    "date": "2027-02-05",
    "time": "09:00",
    "title": "Churn (Kat): Amex $7,500 DD tranches begin \u2014 ~$2,500/mo via Fidelity CMA thru Apr (deconflict @money)",
-   "source": "churn",
+   "source": "churn-kat",
    "type": "deadline"
   },
   {
