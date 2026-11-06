@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0f1115">
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0f1115"><meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
 <title>Tristan — Master Calendar</title>
 <style>
 body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;background:#0f1115;color:#e8e8ea;margin:0;padding:14px}
@@ -43,6 +43,7 @@ input[type=submit]{background:#d4af37;color:#111;border:0;font-weight:700;cursor
 </style></head><body>
 <h1 id="mLabel" onclick="closeDay()"></h1>
 <div class="ym" id="yLabel"></div>
+<div class="ym" style="font-size:10px;color:#5a5f68" id="buildStamp"></div>
 <div class="nav">
 <button class="vbtn" data-v="all" onclick="setFilter('all')">All</button>
 <button class="vbtn" data-v="churn" onclick="setFilter('churn')">Churn</button>
@@ -73,7 +74,7 @@ var LOCAL=['127.0.0.1','localhost'].includes(location.hostname);
 var REPO='tristan-calendar';
 var PK='cal_pat_'+REPO;
 var URL_=LOCAL?'/events':'events.json';
-var DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+var BUILD='v3 · built 2026-11-05 21:5x CST';var DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 var MON=['January','February','March','April','May','June','July','August','September','October','November','December'];
 function pat(){return localStorage.getItem(PK)||''}
 function todayStr(){var d=new Date(Date.now()-new Date().getTimezoneOffset()*60000);return d.toISOString().slice(0,10)}
@@ -102,6 +103,7 @@ async function refresh(){
   ALL.sort(function(a,b){return (a.date+(a.time||'')).localeCompare(b.date+(b.time||''))});
   document.getElementById('mLabel').textContent=MON[view.getMonth()];
   document.getElementById('yLabel').textContent=view.getFullYear();
+  var b=document.getElementById('buildStamp');if(b)b.textContent=BUILD;
   document.querySelectorAll('.vbtn').forEach(function(b){
     if(['day','week','month'].indexOf(b.dataset.v)>=0)b.classList.toggle('on',b.dataset.v===vmode);
     else b.classList.toggle('on',b.dataset.v===FILTER);
