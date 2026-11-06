@@ -89,7 +89,7 @@ async function refresh(){try{const _d=await(await fetch(URL_+(URL_.includes('?')
  document.getElementById('grid').innerHTML=g;
  if(openDate)renderDay();}
 function mv(n){view.setMonth(view.getMonth()+n);closeDay();refresh();}
-function openDay(ds){openDate=ds;renderDay();document.getElementById('modal').classList.add('open');}
+function openDay(ds){openDate=ds;renderDay();document.getElementById('modal').classList.add('open');}}
 function closeDay(){openDate=null;document.getElementById('modal').classList.remove('open');}
 function renderDay(){if(!openDate)return;
  document.getElementById('dLabel').textContent=new Date(openDate+'T12:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
@@ -103,7 +103,7 @@ let vmode=(window.innerWidth<761)?'day':'month';
 function setMode(m){vmode=m;document.querySelectorAll('.vbtn').forEach(b=>b.classList.toggle('on',b.dataset.v===m));refresh();scrollTo(0,0);}
 function renderDayView(){const y=view.getFullYear(),m=view.getMonth(),dd=view.getDate();
  const ds0=y+'-'+String(m+1).padStart(2,'0')+'-'+String(dd).padStart(2,'0');
- const base=new Date(view); base.setDate(base.getDate()-((base.getDay()+7-1)%7)); // week starts Monday
+ const base=new Date(view.getFullYear(),view.getMonth(),view.getDate());base.setDate(base.getDate()-base.getDay()); // week starts Monday
  let rows='';
  for(let i=0;i<7;i++){const d2=new Date(base);d2.setDate(base.getDate()+i);
   const ds=d2.getFullYear()+'-'+String(d2.getMonth()+1).padStart(2,'0')+'-'+String(d2.getDate()).padStart(2,'0');
@@ -114,7 +114,7 @@ function renderDayView(){const y=view.getFullYear(),m=view.getMonth(),dd=view.ge
    +'</div>';}
  document.getElementById('grid').innerHTML='<div class="wgrid">'+rows+'</div>';}
 function renderWeekView(){const y=view.getFullYear(),m=view.getMonth(),dd=view.getDate();
- const base=new Date(view); base.setDate(base.getDate()-((base.getDay()+7-1)%7));
+ const base=new Date(view.getFullYear(),view.getMonth(),view.getDate());base.setDate(base.getDate()-base.getDay());
  let g=DOW.map(d=>'<div class=dow>'+d+'</div>').join('');
  for(let i=0;i<7;i++){const d2=new Date(base);d2.setDate(base.getDate()+i);
   const ds=d2.getFullYear()+'-'+String(d2.getMonth()+1).padStart(2,'0')+'-'+String(d2.getDate()).padStart(2,'0');
