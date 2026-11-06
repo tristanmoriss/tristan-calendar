@@ -107,6 +107,7 @@ var REPO='tristan-calendar';
 var PK='cal_pat_'+REPO;
 var URL_=LOCAL?'/events':'events.json';
 var BUILD='v7 · Nov 05 11:04PM CST';
+var DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 var MON=['January','February','March','April','May','June','July','August','September','October','November','December'];
 function pat(){return localStorage.getItem(PK)||''}
 function todayStr(){var d=new Date(Date.now()-new Date().getTimezoneOffset()*60000);return d.toISOString().slice(0,10)}
