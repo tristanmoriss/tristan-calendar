@@ -154,8 +154,10 @@ function renderMonth(y,m){
     var ds=y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
     var wd=new Date(y,m,d).getDay();
     var evs=ALL.filter(function(e){return e.date===ds&&pass(e)});
-    var de=evs.slice(0,4).map(function(e){return '<div class="ev '+cls(e)+(imp(e)?' imp':'')+'">'+(imp(e)&&(e.title||'').indexOf('\u{1F534}')!==0?'\u{1F534} ':'')+(e.time?e.time+' ':'')+e.title.replace(/</g,'&lt;')+'</div>'}).join('');
-    var more=evs.length>4?'<div class=more>+'+(evs.length-4)+' more</div>':'';
+    var narrow=innerWidth<761;
+    var de= (narrow?evs.slice(0,3):evs.slice(0,4)).map(function(e){return '<div class="ev '+cls(e)+(imp(e)?' imp':'')+'">'+(imp(e)&&(e.title||'').indexOf('\u{1F534}')!==0?'\u{1F534} ':'')+e.title.replace(/</g,'&lt;')+'</div>'}).join('')
+      +(narrow&&evs.length>3?'<span class=dots>'+evs.slice(3,7).map(function(e){return '<span class="dot '+cls(e)+'"></span>'}).join('')+'</span>':'')
+      +(evs.length>(narrow?7:4)?'<div class=moren>+'+(evs.length-(narrow?7:4))+' more</div>':'');
     g+='<div class="day'+(wd===0||wd===6?' wknd':'')+(ds===today?' today':'')+'" onclick="openDay(\''+ds+'\')"><div class=dnum>'+d+'</div>'+de+more+'</div>';
   }
   document.getElementById('grid').innerHTML=g;
