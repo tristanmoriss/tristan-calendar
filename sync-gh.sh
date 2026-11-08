@@ -25,6 +25,7 @@ PY
     cp "$SRC/events.json" "$DIR/events.json"
   fi
 fi
+git pull --rebase -q origin main 2>/dev/null || true
 git add -A; git commit -qm "calendar sync $(date '+%m-%d %H:%M')" || echo "no changes"
 git push -q -u origin main 2>&1 | tail -1 || true
 export PATH="$PATH:/Users/tristanmorissette/.hermes/tools/bin"
