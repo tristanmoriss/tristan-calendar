@@ -22,6 +22,13 @@
    "type": "deadline"
   },
   {
+   "date": "2026-11-06",
+   "time": "15:30",
+   "title": "Interview: Exowatt (3:30pm)",
+   "source": "manual",
+   "type": "deadline"
+  },
+  {
    "date": "2026-11-07",
    "time": "09:00",
    "title": "Churn: confirm Amex $7,500 landed + $750 posted in app; then NO PUSHES Nov 9-14 (liquid $247 < $1k floor)",
@@ -33,6 +40,13 @@
    "time": "09:00",
    "title": "Churn: CapOne 2nd push + Regions $1k + Citi call",
    "source": "churn",
+   "type": "deadline"
+  },
+  {
+   "date": "2026-11-11",
+   "time": "14:30",
+   "title": "Interview: Arrive (2:30pm)",
+   "source": "manual",
    "type": "deadline"
   },
   {
