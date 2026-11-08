@@ -22,13 +22,6 @@
    "type": "deadline"
   },
   {
-   "date": "2026-11-06",
-   "time": "15:30",
-   "title": "Interview: Exowatt (3:30pm)",
-   "source": "manual",
-   "type": "deadline"
-  },
-  {
    "date": "2026-11-07",
    "time": "09:00",
    "title": "Churn: confirm Amex $7,500 landed + $750 posted in app; then NO PUSHES Nov 9-14 (liquid $247 < $1k floor)",
@@ -54,13 +47,6 @@
    "time": "14:30",
    "title": "Interview: Arrive (2:30pm)",
    "source": "manual",
-   "type": "deadline"
-  },
-  {
-   "date": "2026-11-13",
-   "time": "23:59",
-   "title": "SCMT \u2014 RFI document DUE (Nov 13)",
-   "source": "school",
    "type": "deadline"
   },
   {
@@ -257,13 +243,6 @@
    "time": "09:00",
    "title": "Churn (Kat): MidFirst verify DoC terms -> open ONLY if Chex pacing allows (CapOne+FNBO = 2 pulls by Dec; 3rd same-window risks flag), else Jan ($300)",
    "source": "churn-kat",
-   "type": "deadline"
-  },
-  {
-   "date": "2026-12-15",
-   "time": "09:00",
-   "title": "BMO bonus offer expires",
-   "source": "churn",
    "type": "deadline"
   },
   {
